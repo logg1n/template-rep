@@ -1,0 +1,15 @@
+{
+  "description": "Универсальный инструмент Trello. element — цель, nested — контейнер. Поиск по именам автоматический.",
+  "name": "usage_trello_board",
+  "parameters": {
+    "properties": {
+      "debug": {
+        "description": "Включение отладочного режима.",
+        "type": "boolean",
+        "default": false
+      }
+    },
+    "required": [],
+    "type": "object"
+  }
+}

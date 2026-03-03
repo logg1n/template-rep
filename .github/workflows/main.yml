@@ -1,0 +1,43 @@
+
+# .github/workflows/main.yml
+name: function_name Workflow
+on:
+  push:
+    branches:
+      - main
+      - new
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+
+
+jobs:
+  tests:
+    # Разворачиваем окружение:
+    runs-on: ubuntu-latest
+
+
+    steps:
+    # Клонируем код проекта в рабочую среду нашего workflow, делая его доступным для последующих шагов
+    - name: Check out code
+      uses: actions/checkout@v3
+    # Устанавливаем Python с помощью action
+    - name: Set up Python
+      uses: actions/setup-python@v4
+     # В action setup-python@v4 передаём параметр — версию Python
+      with:
+        python-version: 3.10   # Устанавливаем зависимости проекта
+    # Их также можно отредактировать позже
+    - name: Install dependencies
+      run: |
+        # Или, если у нас есть файл requirements.txt
+        python -m pip install -r requirements.txt
+    - name: Run Trello Function Tests
+      env:
+        KEY: ${{secrets.GITHUB_TOKEN}}
+      run: |
+             # Запускаем тесты, выводим в консоль и пишем в файл
+            pytest test_api.py -v -s --cov=new_use_google_calendar | tee results.log
+
